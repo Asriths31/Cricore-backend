@@ -34,7 +34,7 @@ app.post("/post",(req,res)=>{
     team1={
         id:0,
         name:data.teamname1,
-        team:JSON.parse(data.team1),
+        team:data.team1,
         score:0,
         wickets:0,
         oversplayed:0
@@ -42,13 +42,13 @@ app.post("/post",(req,res)=>{
     team2={
         id:1,
         name:data.teamname2,
-        team:JSON.parse(data.team2),
+        team:data.team2,
         score:0,
         wickets:0,
         oversplayed:0
     }
     console.log("from post/post",team1players)
-    team1players=team1.team.map((players,index)=>{
+    team1players=JSON.parse(team1.team).map((players,index)=>{
         return({
             id:index,
             name:players,
@@ -58,7 +58,7 @@ app.post("/post",(req,res)=>{
             oversbowled:0
         })
     })
-    team2players=team2.team.map((players,index)=>{
+    team2players=JSON.parse(team2.team).map((players,index)=>{
         return({
             id:index,
             name:players,
