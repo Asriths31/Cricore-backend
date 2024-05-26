@@ -1,10 +1,13 @@
 import express, { json } from "express"
 import cors from "cors"
+import bodyParser from "body-parser";
 const app=express()
 const PORT = process.env.PORT || 2001;
 let data,postdata,team1players,team2,team2players,team1,playerscore,teamscore
 app.use(cors())
-app.use(express.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}))
+
+// app.use(express.urlencoded({extended:true}))
 
 
 // team2players=team2.map((players,index)=>{
@@ -29,14 +32,14 @@ app.get("/teams",(req,res)=>{
       console.log("from get/teams",data)
 })
 app.post("/post",(req,res)=>{
-    data=req.body
+    data=(req.body)
     console.log("from post/post",data.team1)
-    console.log("from parseee post/post",JSON.parse(data.team1))
+    console.log("from parseee post/post",JSON.parse([data.team1]))
 
     team1={
         id:0,
         name:data.teamname1,
-        team:data.team1,
+        team:[JSON.parse(data.team1)],
         score:0,
         wickets:0,
         oversplayed:0
@@ -44,13 +47,13 @@ app.post("/post",(req,res)=>{
     team2={
         id:1,
         name:data.teamname2,
-        team:data.team2,
+        team:[JSON.parse(data.team2)],
         score:0,
         wickets:0,
         oversplayed:0
     }
     console.log("from damnnnn post/post",team1players)
-    team1players=JSON.parse(team1.team).map((players,index)=>{
+    team1players=(team1.team).map((players,index)=>{
         return({
             id:index,
             name:players,
@@ -60,7 +63,7 @@ app.post("/post",(req,res)=>{
             oversbowled:0
         })
     })
-    team2players=JSON.parse(team2.team).map((players,index)=>{
+    team2players=(team2.team).map((players,index)=>{
         return({
             id:index,
             name:players,
