@@ -1,4 +1,4 @@
-import express from "express"
+import express, { json } from "express"
 import cors from "cors"
 const app=express()
 const PORT = process.env.PORT || 2001;
@@ -31,6 +31,8 @@ app.get("/teams",(req,res)=>{
 app.post("/post",(req,res)=>{
     data=req.body
     console.log("from post/post",data.team1)
+    console.log("from parseee post/post",JSON.parse(data.team1))
+
     team1={
         id:0,
         name:data.teamname1,
@@ -47,7 +49,7 @@ app.post("/post",(req,res)=>{
         wickets:0,
         oversplayed:0
     }
-    console.log("from post/post",team1players)
+    console.log("from damnnnn post/post",team1players)
     team1players=JSON.parse(team1.team).map((players,index)=>{
         return({
             id:index,
@@ -69,7 +71,7 @@ app.post("/post",(req,res)=>{
         })
     })
     data={...data,team1players,team2players}
-    console.log("from post/post",team1players,data)
+    // console.log("from mannnnnn post/post",team1players,data)
 
 
     res.send({team1players,team2players}) 
