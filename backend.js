@@ -47,7 +47,7 @@ app.post("/post",(req,res)=>{
         wickets:0,
         oversplayed:0
     }
-    console.log("from post/post")
+    console.log("from post/post",team1players)
     team1players=team1.team.map((players,index)=>{
         return({
             id:index,
@@ -69,6 +69,8 @@ app.post("/post",(req,res)=>{
         })
     })
     data={...data,team1players,team2players}
+    console.log("from post/post",team1players,data)
+
 
     res.send({team1players,team2players}) 
 
