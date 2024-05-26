@@ -34,12 +34,12 @@ app.get("/teams",(req,res)=>{
 app.post("/post",(req,res)=>{
     data=(req.body)
     console.log("from post/post",data.team1)
-    console.log("from parseee post/post",JSON.parse([data.team1]))
+    console.log("from parseee post/post",data.team1)
 
     team1={
         id:0,
         name:data.teamname1,
-        team:[JSON.parse(data.team1)],
+        team:data.team1,
         score:0,
         wickets:0,
         oversplayed:0
@@ -47,7 +47,7 @@ app.post("/post",(req,res)=>{
     team2={
         id:1,
         name:data.teamname2,
-        team:[JSON.parse(data.team2)],
+        team:data.team2,
         score:0,
         wickets:0,
         oversplayed:0
