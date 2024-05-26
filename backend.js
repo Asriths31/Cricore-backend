@@ -68,6 +68,8 @@ app.post("/post",(req,res)=>{
             oversbowled:0
         })
     })
+    data={...data,team1players,team2players}
+
     res.send({team1players,team2players}) 
 
     
