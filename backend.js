@@ -3,7 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser";
 const app=express()
 const PORT = process.env.PORT || 2001;
-let data,postdata,team1players,team2,team2players,team1,playerscore,teamscore
+var data,postdata,team1players,team2,team2players,team1,playerscore,teamscore
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))
 
@@ -33,8 +33,8 @@ app.get("/teams",(req,res)=>{
 })
 app.post("/post",(req,res)=>{
     data=(req.body)
-    console.log("from post/post",data.team1)
-    console.log("from parseee post/post",data.team1)
+    console.log("from post/post",data)
+    // console.log("from parseee post/post",data.team1)
 
     team1={
         id:0,
@@ -52,7 +52,7 @@ app.post("/post",(req,res)=>{
         wickets:0,
         oversplayed:0
     }
-    console.log("from damnnnn post/post",team1players)
+    // console.log("from damnnnn post/post",team1players)
     team1players=(team1.team).map((players,index)=>{
         return({
             id:index,
@@ -121,7 +121,7 @@ app.patch("/update/:id",(req,res)=>{
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
         res.send(team2players[id])
     }
-    console.log("from patch/id",playerscore,team1players[id],team2players[id])
+    console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
 
 })
 // app.get("/updated",(req,res)=>{
