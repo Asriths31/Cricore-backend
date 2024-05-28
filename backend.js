@@ -96,12 +96,12 @@ app.patch("/update/",(req,res)=>{
      const team=req.params.team
      teamscore=req.body
      if(data.teamname1===teamscore.team){
-           team1={...team1,score:teamscore.score,wickets:teamscore.wickets,oversplayed:teamscore.oversplayed}
+           team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
      
      res.send(team1)
         }
      if(data.teamname2===teamscore.team){
-        team2={...team2,score:teamscore.score,wickets:teamscore.wickets,oversplayed:teamscore.oversplayed}
+        team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
      res.send(team2)
     //  console.log("updateesddd2222")
 
@@ -111,7 +111,7 @@ console.log("from patch/updateesddd",teamscore,team1,team2)
 })
 app.patch("/update/:id",(req,res)=>{
     playerscore=req.body
-    const id=req.params.id
+    const id=req.params.id-1
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
