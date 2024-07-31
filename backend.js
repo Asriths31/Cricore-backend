@@ -35,19 +35,20 @@ app.post("/post",(req,res)=>{
     data=(req.body)
     console.log("from post/post",data)
     // console.log("from parseee post/post",data.team1)
-
+    // console.log(JSON.parse(data.team1))
     team1={
         id:0,
         name:data.teamname1,
-        team:data.team1,
+        team:JSON.parse(data.team1),
         score:0,
         wickets:0,
         oversplayed:0
+
     }
     team2={
         id:1,
         name:data.teamname2,
-        team:data.team2,
+        team:JSON.parse(data.team2),
         score:0,
         wickets:0,
         oversplayed:0
@@ -55,7 +56,7 @@ app.post("/post",(req,res)=>{
     // console.log("from damnnnn post/post",team1players)
     team1players=(team1.team).map((players,index)=>{
         return({
-            id:index,
+            id:index+1,
             name:players,
             score:0,
             wickets:0,
@@ -65,7 +66,7 @@ app.post("/post",(req,res)=>{
     })
     team2players=(team2.team).map((players,index)=>{
         return({
-            id:index,
+            id:index+1,
             name:players,
             score:0,
             wickets:0,
@@ -74,24 +75,38 @@ app.post("/post",(req,res)=>{
         })
     })
     data={...data,team1players,team2players}
-    // console.log("from mannnnnn post/post",team1players,data)
+    // console.log("from mannnnnn post/post",data)
 
 
-    res.send({team1players,team2players}) 
+    res.status(200).send({team1players,team2players}) 
 
     
 
 })
 
 app.post("/toss",(req,res)=>{
-    postdata=req.body
+    postdata=(req.body)
      console.log("from post/toss",postdata)
 })
+
 app.get("/toss",(req,res)=>{
     res.send(postdata)
     console.log("from get/toss",postdata)
 
 })
+
+app.patch("/toss",(req,res)=>{
+    console.log(req.body)
+    postdata={...postdata, batting: req.body.batting,
+        bowling:  req.body.bowling,
+        striker:  req.body.striker,
+        nonstriker:  req.body.nonstriker,
+        bowler:  req.body.bowler,
+        overs:  req.body.overs}
+        console.log(postdata)
+})
+
+
 app.patch("/update/",(req,res)=>{ 
      const team=req.params.team
      teamscore=req.body
@@ -115,13 +130,13 @@ app.patch("/update/:id",(req,res)=>{
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
-    res.send(team1players[id])
+    res.send(team1players)
     }
     else if(playerscore.team===data.teamname2){
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
-        res.send(team2players[id])
+        res.send(team2players)
     }
-    console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
+    // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
 
 })
 // app.get("/updated",(req,res)=>{
