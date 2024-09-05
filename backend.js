@@ -126,7 +126,7 @@ console.log("from patch/updateesddd",teamscore,team1,team2)
 })
 app.patch("/update/:id",(req,res)=>{
     playerscore=req.body
-    const id=req.params.id
+    const id=req.params.id-1
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
