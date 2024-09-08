@@ -61,7 +61,9 @@ app.post("/post",(req,res)=>{
             score:0,
             wickets:0,
             ballsplayed:0,
-            oversbowled:0
+            oversbowled:0,
+            scoregiven:0
+
         })
     })
     team2players=(team2.team).map((players,index)=>{
@@ -71,7 +73,8 @@ app.post("/post",(req,res)=>{
             score:0,
             wickets:0,
             ballsplayed:0,
-            oversbowled:0
+            oversbowled:0,
+            scoregiven:0
         })
     })
     data={...data,team1players,team2players}
@@ -117,7 +120,7 @@ app.patch("/update/",(req,res)=>{
         }
      if(data.teamname2===teamscore.team){
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     res.send(team2)
+     res.send(team1)
     //  console.log("updateesddd2222")
 
     }
@@ -130,11 +133,11 @@ app.patch("/update/:id",(req,res)=>{
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
-    res.send(team1players)
+    res.send({team1players,team2players})
     }
     else if(playerscore.team===data.teamname2){
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
-        res.send(team2players)
+        res.send({team1players,team2players})
     }
     // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
 
