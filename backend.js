@@ -132,7 +132,7 @@ app.patch("/update/:id",(req,res)=>{
     const id=req.params.id-1
    if(playerscore.team===data.teamname1)
     {
-     team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
+     team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1+1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
     res.send({team1players,team2players})
     }
     else if(playerscore.team===data.teamname2){
