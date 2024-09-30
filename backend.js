@@ -132,11 +132,11 @@ app.patch("/update/:id",(req,res)=>{
     const id=req.params.id-1
    if(playerscore.team===data.teamname1)
     {
-     team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1+1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
+     team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven}
     res.send({team1players,team2players})
     }
     else if(playerscore.team===data.teamname2){
-        team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled}
+        team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1}
         res.send({team1players,team2players})
     }
     // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
