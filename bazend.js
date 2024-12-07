@@ -138,7 +138,9 @@ app.get("/teams",async(req,res)=>{
     const team2data=await team22players.find({})
     const team1=await teamsdata.find({id:0})
     const team2=await teamsdata.find({id:1})
+    if(team1!==undefined&&team2!==undefined){
       res.send({teamname1:team1[0].name,teamname2:team2[0].name,team1players:team1data,team2players:team2data})
+     }
       console.log("from get/teams")},10000)
    
 })
@@ -193,11 +195,11 @@ app.post("/post",async(req,res)=>{
     teamdata1.save()
     teamdata2.save()
     // console.log("from post/post",team2data)
-    // console.log("from mannnnnn post/post",data)
+    console.log("from mannnnnn post/post",data)
     team1players.map((player)=>{
         const player1=new team11players(player)
-        player1.save()
-    })  
+        player1.save().then("saved succefully")
+    }) 
      team2players.map((player)=>{
         const player2=new team22players(player)
         player2.save()
