@@ -25,7 +25,9 @@ app.use(bodyParser.urlencoded({extended:true}))
 // const mongoose = require('mongoose');
 // require('dotenv').config();
  const uri="mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore"
+ let teamsdata,user,team11players,team22players 
 mongoose.connect(uri)
+.then(res=>console.log("connected"))
 let schema={
     id:Number,
     name:String,
@@ -47,30 +49,36 @@ let matchschema={
     wickets:Number,
     oversplayed:Number
 }
-const team22players=mongoose.model("team2players",schema)
-const team11players=mongoose.model("team1players",schema)
-const user=mongoose.model("userData",userSchema)
-const teamsdata=mongoose.model("teamsData",matchschema)
+mongoose.connect(uri)
+.then(res=>{
+    console.log("connected")
+    team22players.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    team11players.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    teamsdata.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    
+})
+ team22players=mongoose.model("team2players",schema)
+ team11players=mongoose.model("team1players",schema)
+ user=mongoose.model("userData",userSchema)
+ teamsdata=mongoose.model("teamsData",matchschema)
 // user.deleteMany({}).then((res)=>{
 //     console.log(res)
 // }).catch((err)=>{
 //     console.log(err)
 // })
-team22players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-team11players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-teamsdata.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
+
 // const player=new crict(newplayer)
 // player.save()
 
