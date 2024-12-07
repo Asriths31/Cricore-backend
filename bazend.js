@@ -259,7 +259,7 @@ app.patch("/update/:id",async(req,res)=>{
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven}
-      team11player.updateOne({id:id},
+      team11players.updateOne({id:id},
         {$set:{
             score:playerscore.score,
             ballsplayed:playerscore.ballsplayed*1,
