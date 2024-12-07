@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "bazend.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server/bazend.js",
+    "start": "nodemon bazend.js",
     "build": "cd client && npm install && npm run build"
   },
   "keywords": [],
@@ -14,9 +14,17 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.7.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3"
   },
   "engines": {
     "node": "20.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
