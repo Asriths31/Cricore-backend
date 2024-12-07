@@ -267,7 +267,7 @@ app.patch("/update/:id",async(req,res)=>{
             oversbowled:playerscore.oversbowled*1,
             scoregiven:playerscore.scoregiven*1
       }}).then((res)=>console.log(res)).
-      catch(err=>console.log(err))
+      catch(err=>console.log("from updte id",err))
      let players1=await team11players.find({})
      let players2=await team22players.find({})
 
