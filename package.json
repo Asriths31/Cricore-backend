@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bazend.js",
   "type": "module",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node server/bazend.js",
     "build": "cd client && npm install && npm run build"
   },
   "keywords": [],
