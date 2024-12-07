@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 // console.log(team2players)
 // const mongoose = require('mongoose');
 // require('dotenv').config();
- const uri="mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore"
+ const uri="mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore?ssl=true&retryWrites=true&w=majority"
  let teamsdata,user,team11players,team22players 
 mongoose.connect(uri)
 .then(res=>console.log("connected"))
