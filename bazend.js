@@ -30,8 +30,7 @@ dotenv.config()
 //  console.log(uri)
  let teamsdata,user,team11players,team22players 
 mongoose.connect(uri,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+   
     serverSelectionTimeoutMS: 30000, // Increase timeout
 })
 .then(res=>console.log("connected"))
@@ -56,30 +55,26 @@ let matchschema={
     wickets:Number,
     oversplayed:Number
 }
-mongoose.connect(uri)
-.then(res=>{
-    console.log("connected")
-    team22players.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    team11players.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    teamsdata.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    
-})
- team22players=mongoose.model("team2players",schema)
+team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
  user=mongoose.model("userData",userSchema)
  teamsdata=mongoose.model("teamsData",matchschema)
+team22players.deleteMany({}).then((res)=>{
+    console.log(res)
+}).catch((err)=>{
+    console.log(err)
+})
+team11players.deleteMany({}).then((res)=>{
+    console.log(res)
+}).catch((err)=>{
+    console.log(err)
+})
+teamsdata.deleteMany({}).then((res)=>{
+    console.log(res)
+}).catch((err)=>{
+    console.log(err)
+})
+ 
 // user.deleteMany({}).then((res)=>{
 //     console.log(res)
 // }).catch((err)=>{
@@ -144,7 +139,7 @@ app.get("/teams",async(req,res)=>{
     const team1=await teamsdata.find({id:0})
     const team2=await teamsdata.find({id:1})
       res.send({teamname1:team1[0].name,teamname2:team2[0].name,team1players:team1data,team2players:team2data})
-      console.log("from get/teams")},2000)
+      console.log("from get/teams")},10000)
    
 })
 app.post("/post",async(req,res)=>{
