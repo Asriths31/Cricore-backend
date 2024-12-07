@@ -4,11 +4,13 @@ import bodyParser from "body-parser";
 // import MongoClient,ServerApiVersion from "mongodb";
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv"
 const app=express()
 const PORT = process.env.PORT || 2001;
 var data,postdata,team1players,team2,team2players,team1,playerscore,teamscore
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))
+dotenv.config()
 // app.use(express.urlencoded({extended:true}))
 
 
@@ -23,10 +25,15 @@ app.use(bodyParser.urlencoded({extended:true}))
 // })
 // console.log(team2players)
 // const mongoose = require('mongoose');
-// require('dotenv').config();
- const uri="mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore?ssl=true&retryWrites=true&w=majority"
+
+ const uri=process.env.MONGO_URI||"mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore?retryWrites=true&w=majority&appName=Cluster0"
+//  console.log(uri)
  let teamsdata,user,team11players,team22players 
-mongoose.connect(uri)
+mongoose.connect(uri,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // Increase timeout
+})
 .then(res=>console.log("connected"))
 let schema={
     id:Number,
