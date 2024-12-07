@@ -261,11 +261,11 @@ app.patch("/update/:id",async(req,res)=>{
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven}
       team11players.updateOne({id:id},
         {$set:{
-            score:playerscore.score,
+            score:playerscore.score*1,
             ballsplayed:playerscore.ballsplayed*1,
-            wickets:playerscore.wickets,
-            oversbowled:playerscore.oversbowled,
-            scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven
+            wickets:playerscore.wickets*1,
+            oversbowled:playerscore.oversbowled*1,
+            scoregiven:playerscore.scoregiven*1
       }}).then((res)=>console.log(res)).
       catch(err=>console.log(err))
      let players1=await team11players.find({})
