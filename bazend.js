@@ -129,7 +129,7 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/",authenticate,(req,res)=>{
-    res.send(req.data)
+    res.send(true)
     console.log("from get/",req.data)
 
 })
