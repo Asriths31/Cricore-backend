@@ -99,21 +99,22 @@ teamsdata.deleteMany({}).then((res)=>{
 //     const User = mongoose.model('User', userSchema);
     
 //     new User(newplayer)
+let data999
 async function authenticate(req,res,next){
     try{
-         const data=await user.find({mailId:req.query.mailId})   
-         if(data.length!==0){
-            if(req.query.passcode!=data[0].passcode){
+          data999=await user.find({mailId:req.query.mailId})   
+         if(data999.length!==0){
+            if(req.query.passcode!=data999[0].passcode){
                 res.send("password is incorrect")
             }
             else{
-                return next(data)
+                 next()
             }
          }
          else{
             res.send("user not found")
          }
-     console.log(data,req.query)}
+     }
      catch(err){
         console.log(err)
      }
@@ -129,7 +130,7 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/",authenticate,(req,res)=>{
-    res.send(true)
+    res.send([true,data999])
     console.log("from get/",req.data)
 
 })
