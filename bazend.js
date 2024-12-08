@@ -303,7 +303,6 @@ app.patch("/update/:id",async(req,res)=>{
      let players2=await team22players.find({}).sort({"id": -1})
 
      res.send({team1players:players1,team2players:players2})
-        res.send({team1players,team2players})
     }
     // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
 
