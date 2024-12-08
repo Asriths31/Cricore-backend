@@ -115,7 +115,7 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/",authenticate,(req,res)=>{
-    res.send([true,data999])
+    res.send(true)
     console.log("from get/",req.data)
     team22players.deleteMany({}).then((res)=>{
         console.log(res)
@@ -134,6 +134,9 @@ app.get("/",authenticate,(req,res)=>{
     })
     
 
+})
+app.get("/sign",(req,res)=>{
+    res.send(data999)
 })
 app.get("/teams",async(req,res)=>{
     setTimeout(async()=>{ const team1data=await team11players.find({})
