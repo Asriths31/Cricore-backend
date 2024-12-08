@@ -246,12 +246,22 @@ app.patch("/update/",(req,res)=>{
      teamscore=req.body
      if(data.teamname1===teamscore.team){
            team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     
-     res.send(team1)
+     teamsdata.update({id:0},{$set:{
+        score:teamscore.score,
+        wickets:teamscore.wickets+1,
+        oversplayed:teamscore.oversplayed
+     }})
+     res.send(teamsdata.find({id:1}))
         }
      if(data.teamname2===teamscore.team){
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     res.send(team1)
+           teamsdata.update({id:1},{$set:{
+        score:teamscore.score,
+        wickets:teamscore.wickets+1,
+        oversplayed:teamscore.oversplayed
+     }})
+     res.send(teamsdata.find({id:1})
+)
     //  console.log("updateesddd2222")
 
     }
@@ -270,16 +280,29 @@ app.patch("/update/:id",async(req,res)=>{
             ballsplayed:playerscore.ballsplayed*1,
             wickets:playerscore.wickets*1,
             oversbowled:playerscore.oversbowled*1,
-            scoregiven:0
+            scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
       }}).then((res)=>console.log(res)).
       catch(err=>console.log("from updte id",err))
      let players1=await team11players.find({}).sort({"id": -1})
-     let players2=await team22players.find({})
+     let players2=await team22players.find({}).sort({"id": -1})
 
      res.send({team1players:players1,team2players:players2})
     }
     else if(playerscore.team===data.teamname2){
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1}
+         team22players.updateOne({id:id},
+        {$set:{
+            score:playerscore.score*1,
+            ballsplayed:playerscore.ballsplayed*1,
+            wickets:playerscore.wickets*1,
+            oversbowled:playerscore.oversbowled*1,
+            scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
+      }}).then((res)=>console.log(res)).
+      catch(err=>console.log("from updte id",err))
+     let players1=await team11players.find({}).sort({"id": -1})
+     let players2=await team22players.find({}).sort({"id": -1})
+
+     res.send({team1players:players1,team2players:players2})
         res.send({team1players,team2players})
     }
     // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
