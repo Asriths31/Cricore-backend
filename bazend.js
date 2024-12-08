@@ -59,21 +59,6 @@ team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
  user=mongoose.model("userData",userSchema)
  teamsdata=mongoose.model("teamsData",matchschema)
-team22players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-team11players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-teamsdata.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
  
 // user.deleteMany({}).then((res)=>{
 //     console.log(res)
@@ -132,6 +117,22 @@ app.post("/sign_up",(req,res)=>{
 app.get("/",authenticate,(req,res)=>{
     res.send([true,data999])
     console.log("from get/",req.data)
+    team22players.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    team11players.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    teamsdata.deleteMany({}).then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
+    
 
 })
 app.get("/teams",async(req,res)=>{
