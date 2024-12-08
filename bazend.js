@@ -241,26 +241,26 @@ app.patch("/toss",(req,res)=>{
 })
 
 
-app.patch("/update/",(req,res)=>{ 
+app.patch("/update/",async(req,res)=>{ 
      const team=req.params.team
      teamscore=req.body
      if(data.teamname1===teamscore.team){
            team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     teamsdata.update({id:0},{$set:{
+     teamsdata.updateOne({id:0},{$set:{
         score:teamscore.score,
         wickets:teamscore.wickets+1,
         oversplayed:teamscore.oversplayed
      }})
-     res.send(teamsdata.find({id:1}))
+     res.send(await teamsdata.find({id:0}))
         }
      if(data.teamname2===teamscore.team){
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-           teamsdata.update({id:1},{$set:{
+           teamsdata.updateOne({id:1},{$set:{
         score:teamscore.score,
         wickets:teamscore.wickets+1,
         oversplayed:teamscore.oversplayed
      }})
-     res.send(teamsdata.find({id:1})
+     res.send(await teamsdata.find({id:1})
 )
     //  console.log("updateesddd2222")
 
