@@ -107,7 +107,7 @@ async function authenticate(req,res,next){
                 res.send("password is incorrect")
             }
             else{
-                return next()
+                return next(data)
             }
          }
          else{
@@ -129,8 +129,8 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/",authenticate,(req,res)=>{
-    res.send(true)
-    console.log("from get/")
+    res.send(req.data)
+    console.log("from get/",req.data)
 
 })
 app.get("/teams",async(req,res)=>{
