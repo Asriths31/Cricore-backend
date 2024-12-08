@@ -1,0 +1,16 @@
+{
+  "name": "database",
+  "type":"module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bazend.js",
+  "scripts": {
+"start": "nodemon bazend.js"  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3"
+  }
+}
