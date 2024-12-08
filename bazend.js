@@ -255,7 +255,7 @@ console.log("from patch/updateesddd",teamscore,team1,team2)
 })
 app.patch("/update/:id",async(req,res)=>{
     playerscore=req.body
-    const id=req.params.id
+    const id=req.params.id-1
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven}
@@ -265,13 +265,13 @@ app.patch("/update/:id",async(req,res)=>{
             ballsplayed:playerscore.ballsplayed*1,
             wickets:playerscore.wickets*1,
             oversbowled:playerscore.oversbowled*1,
-            scoregiven:0
+            scoregiven:playerscore.scoregiven*1
       }}).then((res)=>console.log(res)).
       catch(err=>console.log("from updte id",err))
      let players1=await team11players.find({})
      let players2=await team22players.find({})
 
-     res.send({players1,players2})
+     res.send({team1players:players1,team2players:players2})
     }
     else if(playerscore.team===data.teamname2){
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1}
