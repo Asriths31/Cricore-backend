@@ -116,7 +116,7 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/live",async (req,res)=>{
-    let match=await teamsdata.find({})
+    let match=await teamsdata.find({}).sort({id:1})
      res.send(match)
 
 })
@@ -295,8 +295,8 @@ app.patch("/update/:id",async(req,res)=>{
             scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
       }}).then((res)=>console.log(res)).
       catch(err=>console.log("from updte id",err))
-     let players1=await team11players.find({}).sort({"id": -1})
-     let players2=await team22players.find({}).sort({"id": -1})
+     let players1=await team11players.find({}).sort({id: 1})
+     let players2=await team22players.find({}).sort({id: 1})
 
      res.send({team1players:players1,team2players:players2})
     }
