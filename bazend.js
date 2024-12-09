@@ -53,7 +53,8 @@ let matchschema={
     name:String,
     score:Number,
     wickets:Number,
-    oversplayed:Number
+    oversplayed:Number,
+    overs:Number
 }
 team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
@@ -162,7 +163,7 @@ app.post("/post",async(req,res)=>{
     team1={
         id:0,
         name:data.teamname1,
-     
+        overs:0,
         score:0,
         wickets:0,
         oversplayed:0
@@ -171,7 +172,7 @@ app.post("/post",async(req,res)=>{
     team2={
         id:1,
         name:data.teamname2,
-        
+        overs:0,
         score:0,
         wickets:0,
         oversplayed:0
@@ -230,6 +231,10 @@ app.post("/toss",(req,res)=>{
 
 app.get("/toss",(req,res)=>{
     res.send(postdata)
+    teamsdata.updateMany({},{$set:{
+        overs:postdata.overs
+    }}).then(res=>console.log("from get/toss",res))
+    .catch(err=>console.log("from get/toss",err))
     console.log("from get/toss",postdata)
 
 })
