@@ -114,6 +114,11 @@ app.post("/sign_up",(req,res)=>{
     use.save()
     res.send("registered succefully")
 })
+app.get("/live",async (req,res)=>{
+    let match=await teamsdata.find({})
+     res.send(match)
+
+})
 app.get("/",authenticate,(req,res)=>{
     res.send(true)
     console.log("from get/",req.data)
