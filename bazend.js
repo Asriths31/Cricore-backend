@@ -248,9 +248,10 @@ app.patch("/update/",async(req,res)=>{
            team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
      teamsdata.updateOne({id:0},{$set:{
         score:teamscore.score*1,
-        wickets:teamscore.wickets*1+1,
+        wickets:teamscore.wickets*1,
         oversplayed:teamscore.oversplayed*1
-     }})
+     }}).then(res=>console.log("from update",res))
+     .catch(err=>console.log("from update",err))
      res.send(await teamsdata.find({id:0}))
         }
      if(data.teamname2===teamscore.team){
@@ -259,7 +260,8 @@ app.patch("/update/",async(req,res)=>{
         score:teamscore.score*1,
         wickets:teamscore.wickets*1+1,
         oversplayed:teamscore.oversplayed*1
-     }})
+     }}).then(res=>console.log("from update",res))
+     .catch(err=>console.log("from update",err))
      res.send(await teamsdata.find({id:1})
 )
     //  console.log("updateesddd2222")
