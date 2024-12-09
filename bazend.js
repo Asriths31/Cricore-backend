@@ -247,18 +247,18 @@ app.patch("/update/",async(req,res)=>{
      if(data.teamname1===teamscore.team){
            team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
      teamsdata.updateOne({id:0},{$set:{
-        score:teamscore.score,
-        wickets:teamscore.wickets+1,
-        oversplayed:teamscore.oversplayed
+        score:teamscore.score*1,
+        wickets:teamscore.wickets*1+1,
+        oversplayed:teamscore.oversplayed*1
      }})
      res.send(await teamsdata.find({id:0}))
         }
      if(data.teamname2===teamscore.team){
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
            teamsdata.updateOne({id:1},{$set:{
-        score:teamscore.score,
-        wickets:teamscore.wickets+1,
-        oversplayed:teamscore.oversplayed
+        score:teamscore.score*1,
+        wickets:teamscore.wickets*1+1,
+        oversplayed:teamscore.oversplayed*1
      }})
      res.send(await teamsdata.find({id:1})
 )
