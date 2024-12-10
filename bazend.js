@@ -116,8 +116,10 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/live",async (req,res)=>{
-    let match=await teamsdata.find({}).sort({id:1})
-     res.send(match)
+    let teamsdata=await teamsdata.find({}).sort({id:1})
+    let team1players=await team11players.find({}).sort({id:1})
+    let team2players=await team22players.find({}).sort({id:1})
+     res.send([teamsdata,team1players,team2players])
 
 })
 app.get("/",authenticate,(req,res)=>{
@@ -145,8 +147,8 @@ app.get("/sign",(req,res)=>{
     res.send(data999)
 })
 app.get("/teams",async(req,res)=>{
-    setTimeout(async()=>{ const team1data=await team11players.find({})
-    const team2data=await team22players.find({})
+    setTimeout(async()=>{ const team1data=await team11players.find({}).sort({id:1})
+    const team2data=await team22players.find({}).sort({id:1})
     const team1=await teamsdata.find({id:0})
     const team2=await teamsdata.find({id:1})
     if(team1!==undefined&&team2!==undefined){
