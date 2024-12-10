@@ -116,10 +116,10 @@ app.post("/sign_up",(req,res)=>{
     res.send("registered succefully")
 })
 app.get("/live",async (req,res)=>{
-    let teamsdata=await teamsdata.find({}).sort({id:1})
+    let match=await teamsdata.find({}).sort({id:1})
     let team1players=await team11players.find({}).sort({id:1})
     let team2players=await team22players.find({}).sort({id:1})
-     res.send([teamsdata,team1players,team2players])
+     res.send([match,team1players,team2players])
 
 })
 app.get("/",authenticate,(req,res)=>{
