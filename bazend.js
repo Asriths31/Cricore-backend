@@ -54,7 +54,8 @@ let matchschema={
     score:Number,
     wickets:Number,
     oversplayed:Number,
-    overs:Number
+    overs:Number,
+    count1:Number
 }
 team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
@@ -168,7 +169,8 @@ app.post("/post",async(req,res)=>{
         overs:0,
         score:0,
         wickets:0,
-        oversplayed:0
+        oversplayed:0,
+        count1:0
 
     }
     team2={
@@ -177,7 +179,8 @@ app.post("/post",async(req,res)=>{
         overs:0,
         score:0,
         wickets:0,
-        oversplayed:0
+        oversplayed:0,
+        count1:0
     }
     // console.log("from damnnnn post/post",team1.name,team2)
     team1players=(data.team1).map((players,index)=>{
@@ -261,7 +264,8 @@ app.patch("/update/",async(req,res)=>{
      teamsdata.updateOne({id:0},{$set:{
         score:teamscore.score*1,
         wickets:teamscore.wickets*1,
-        oversplayed:teamscore.oversplayed*1
+        oversplayed:teamscore.oversplayed*1,
+        count1:count1*1
      }}).then(res=>console.log("from update",res))
      .catch(err=>console.log("from update",err))
      res.send(await teamsdata.find({id:0}))
@@ -271,7 +275,9 @@ app.patch("/update/",async(req,res)=>{
            teamsdata.updateOne({id:1},{$set:{
         score:teamscore.score*1,
         wickets:teamscore.wickets*1+1,
-        oversplayed:teamscore.oversplayed*1
+        oversplayed:teamscore.oversplayed*1,
+        count1:count1*1
+
      }}).then(res=>console.log("from update",res))
      .catch(err=>console.log("from update",err))
      res.send(await teamsdata.find({id:1})
