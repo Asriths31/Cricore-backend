@@ -265,7 +265,7 @@ app.patch("/update/",async(req,res)=>{
         score:teamscore.score*1,
         wickets:teamscore.wickets*1,
         oversplayed:teamscore.oversplayed*1,
-        count1:count1*1
+        count1:teamscore.count1*1
      }}).then(res=>console.log("from update",res))
      .catch(err=>console.log("from update",err))
      res.send(await teamsdata.find({id:0}))
@@ -276,7 +276,7 @@ app.patch("/update/",async(req,res)=>{
         score:teamscore.score*1,
         wickets:teamscore.wickets*1+1,
         oversplayed:teamscore.oversplayed*1,
-        count1:count1*1
+        count1:teamscore.count1*1
 
      }}).then(res=>console.log("from update",res))
      .catch(err=>console.log("from update",err))
