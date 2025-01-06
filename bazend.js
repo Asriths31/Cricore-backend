@@ -106,8 +106,10 @@ async function authenticate(req,res,next){
         console.log(err)
      }
 }
-app.post("/sign_up",(req,res)=>{
+app.post("/sign_up",async(req,res)=>{
     console.log(req.body)
+    let data99=await user.find({mailId:req.query.mailId})   
+    if(data99.length===0){
     const use=new user({
         username:req.body.username,
         mailId:req.body.mailId,
@@ -115,6 +117,8 @@ app.post("/sign_up",(req,res)=>{
     })
     use.save()
     res.send("registered succefully")
+}
+    res.send("User already exists")
 })
 app.get("/live",async (req,res)=>{
     let match=await teamsdata.find({}).sort({id:1})
@@ -127,8 +131,9 @@ app.get("/",authenticate,(req,res)=>{
     res.send(true)
     console.log("from get/",req.data)
 })
-app.get("/sign",authenticate,(req,res)=>{
-    res.send(data999)
+app.get("/sign_up",async(req,res)=>{
+    let data9=await user.find({mailId:req.query.mailId})
+    res.send(data9)
 })
 app.patch("/sign",(req,res)=>{
 
