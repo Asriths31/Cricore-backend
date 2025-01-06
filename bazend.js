@@ -134,8 +134,8 @@ app.get("/",authenticate,(req,res)=>{
     res.send(true)
     console.log("from get/",req.data)
 })
-app.get("/sign_up",async(req,res)=>{
-    let data9=user.find({}).sort({_id:-1}).limit(1)
+app.post("/sign_up",async(req,res)=>{
+    let data9=user.find({mailId:req.body.mailId})
    res.send(data9)
 })
 app.patch("/sign",(req,res)=>{
