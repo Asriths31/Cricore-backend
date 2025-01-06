@@ -109,6 +109,7 @@ async function authenticate(req,res,next){
 app.post("/sign_up",async(req,res)=>{
     console.log(req.body)
     let data99=await user.find({mailId:req.query.mailId})   
+    console.log("from signUp",data99)
     if(data99.length===0){
     const use=new user({
         username:req.body.username,
