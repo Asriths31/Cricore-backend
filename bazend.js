@@ -126,27 +126,13 @@ app.get("/live",async (req,res)=>{
 app.get("/",authenticate,(req,res)=>{
     res.send(true)
     console.log("from get/",req.data)
-    team22players.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    team11players.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    teamsdata.deleteMany({}).then((res)=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-    
-
 })
-app.get("/sign",(req,res)=>{
+app.get("/sign",authenticate,(req,res)=>{
     res.send(data999)
 })
+app.patch("/sign",(req,res)=>{
+
+}) 
 app.get("/teams",async(req,res)=>{
     setTimeout(async()=>{ const team1data=await team11players.find({}).sort({id:1})
     const team2data=await team22players.find({}).sort({id:1})
@@ -155,7 +141,7 @@ app.get("/teams",async(req,res)=>{
     if(team1!==undefined&&team2!==undefined){
       res.send({teamname1:team1[0].name,teamname2:team2[0].name,team1players:team1data,team2players:team2data})
      }
-      console.log("from get/teams")},10000)
+      console.log("from get/teams")},4000)
    
 })
 app.post("/post",async(req,res)=>{
@@ -314,7 +300,7 @@ app.patch("/update/:id",async(req,res)=>{
         {$set:{
             score:playerscore.score*1,
             ballsplayed:playerscore.ballsplayed*1,
-            wickets:playerscore.wickets*1,
+          wickets:playerscore.wickets*1,
             oversbowled:playerscore.oversbowled*1,
             scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
       }}).then((res)=>console.log(res)).
