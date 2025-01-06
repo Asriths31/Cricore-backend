@@ -117,8 +117,10 @@ app.post("/sign_up",async(req,res)=>{
     })
     use.save()
     res.send("registered succefully")
-}
+     }
+    else{
     res.send("User already exists")
+    }
 })
 app.get("/live",async (req,res)=>{
     let match=await teamsdata.find({}).sort({id:1})
