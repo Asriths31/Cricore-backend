@@ -136,7 +136,7 @@ app.get("/",authenticate,(req,res)=>{
 })
 app.post("/sign-user",async(req,res)=>{
     console.log("userrr",req.body)
-    let data9=user.find({mailId:req.body.mailId})
+    let data9=await user.find({mailId:req.body.mailId})
     console.log("user1",data9[0])
    res.send(data9[0])
 })
