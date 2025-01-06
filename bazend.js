@@ -3,7 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser";
 // import MongoClient,ServerApiVersion from "mongodb";
 import mongoose from "mongoose";
-import { MongoClient } from "mongodb";
+import { MongoClient, Timestamp } from "mongodb";
 import dotenv from "dotenv"
 const app=express()
 const PORT = process.env.PORT || 2001;
@@ -86,7 +86,7 @@ team22players=mongoose.model("team2players",schema)
 //     const User = mongoose.model('User', userSchema);
     
 //     new User(newplayer)
-let data999
+let data999,data99
 async function authenticate(req,res,next){
     try{
           data999=await user.find({mailId:req.query.mailId})   
@@ -108,7 +108,7 @@ async function authenticate(req,res,next){
 }
 app.post("/sign_up",async(req,res)=>{
     console.log(req.body)
-    let data99=await user.find({mailId:req.body.mailId})   
+     data99=await user.find({mailId:req.body.mailId})   
     console.log("from signUp",data99)
     if(data99.length===0){
     const use=new user({
@@ -135,7 +135,7 @@ app.get("/",authenticate,(req,res)=>{
     console.log("from get/",req.data)
 })
 app.get("/sign_up",async(req,res)=>{
-    let data9=await user.find({mailId:req.body.mailId})
+    let data9=user.find().sort({timestamp:-1}).limit(1)
     res.send(data9)
 })
 app.patch("/sign",(req,res)=>{
