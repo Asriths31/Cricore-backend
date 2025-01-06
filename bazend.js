@@ -135,7 +135,7 @@ app.get("/",authenticate,(req,res)=>{
     console.log("from get/",req.data)
 })
 app.get("/sign_up",async(req,res)=>{
-    let data9=user.find().sort({timestamp:-1}).limit(1).toArray()
+    let data9=user.find().sort({_id:-1}).limit(1)
     res.send(data9)
 })
 app.patch("/sign",(req,res)=>{
