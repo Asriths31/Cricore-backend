@@ -3,7 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser";
 // import MongoClient,ServerApiVersion from "mongodb";
 import mongoose from "mongoose";
-import { MongoClient } from "mongodb";
+import { MongoClient, Timestamp } from "mongodb";
 import dotenv from "dotenv"
 const app=express()
 const PORT = process.env.PORT || 2001;
@@ -53,27 +53,14 @@ let matchschema={
     name:String,
     score:Number,
     wickets:Number,
-    oversplayed:Number
+    oversplayed:Number,
+    overs:Number,
+    count1:Number
 }
 team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
  user=mongoose.model("userData",userSchema)
  teamsdata=mongoose.model("teamsData",matchschema)
-team22players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-team11players.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-teamsdata.deleteMany({}).then((res)=>{
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
  
 // user.deleteMany({}).then((res)=>{
 //     console.log(res)
@@ -99,27 +86,31 @@ teamsdata.deleteMany({}).then((res)=>{
 //     const User = mongoose.model('User', userSchema);
     
 //     new User(newplayer)
+let data999,data99
 async function authenticate(req,res,next){
     try{
-         const data=await user.find({mailId:req.query.mailId})   
-         if(data.length!==0){
-            if(req.query.passcode!=data[0].passcode){
+          data999=await user.find({mailId:req.query.mailId})   
+         if(data999.length!==0){
+            if(req.query.passcode!=data999[0].passcode){
                 res.send("password is incorrect")
             }
             else{
-                return next()
+                 next()
             }
          }
          else{
             res.send("user not found")
          }
-     console.log(data,req.query)}
+     }
      catch(err){
         console.log(err)
      }
 }
-app.post("/sign_up",(req,res)=>{
+app.post("/sign_up",async(req,res)=>{
     console.log(req.body)
+     data99=await user.find({mailId:req.body.mailId})   
+    console.log("from signUp",data99)
+    if(data99.length===0){
     const use=new user({
         username:req.body.username,
         mailId:req.body.mailId,
@@ -127,21 +118,50 @@ app.post("/sign_up",(req,res)=>{
     })
     use.save()
     res.send("registered succefully")
+     }
+    else{
+    res.send("User already exists")
+    }
+})
+app.get("/live",async (req,res)=>{
+    let match=await teamsdata.find({}).sort({id:1})
+    let team1players=await team11players.find({}).sort({id:1})
+    let team2players=await team22players.find({}).sort({id:1})
+     res.send([match,team1players,team2players])
+
 })
 app.get("/",authenticate,(req,res)=>{
     res.send(true)
-    console.log("from get/")
-
+    console.log("from get/",req.data)
 })
+app.post("/sign-user",async(req,res)=>{
+    console.log("userrr",req.body)
+    let data9=await user.find({mailId:req.body.mailId})
+    console.log("user1",data9[0])
+    team11players.deleteMany({}).then((res)=>{
+    console.log(res)
+    }).catch((err)=>{
+    console.log(err)
+    })
+    team22players.deleteMany({}).then((res)=>{
+        console.log(res)
+        }).catch((err)=>{
+        console.log(err)
+        })
+   res.send(data9[0])
+})
+app.patch("/sign",(req,res)=>{
+
+}) 
 app.get("/teams",async(req,res)=>{
-    setTimeout(async()=>{ const team1data=await team11players.find({})
-    const team2data=await team22players.find({})
+    setTimeout(async()=>{ const team1data=await team11players.find({}).sort({id:1})
+    const team2data=await team22players.find({}).sort({id:1})
     const team1=await teamsdata.find({id:0})
     const team2=await teamsdata.find({id:1})
     if(team1!==undefined&&team2!==undefined){
       res.send({teamname1:team1[0].name,teamname2:team2[0].name,team1players:team1data,team2players:team2data})
      }
-      console.log("from get/teams")},10000)
+      console.log("from get/teams")},4000)
    
 })
 app.post("/post",async(req,res)=>{
@@ -152,19 +172,21 @@ app.post("/post",async(req,res)=>{
     team1={
         id:0,
         name:data.teamname1,
-     
+        overs:0,
         score:0,
         wickets:0,
-        oversplayed:0
+        oversplayed:0,
+        count1:0
 
     }
     team2={
         id:1,
         name:data.teamname2,
-        
+        overs:0,
         score:0,
         wickets:0,
-        oversplayed:0
+        oversplayed:0,
+        count1:0
     }
     // console.log("from damnnnn post/post",team1.name,team2)
     team1players=(data.team1).map((players,index)=>{
@@ -220,6 +242,10 @@ app.post("/toss",(req,res)=>{
 
 app.get("/toss",(req,res)=>{
     res.send(postdata)
+    teamsdata.updateMany({},{$set:{
+        overs:postdata.overs
+    }}).then(res=>console.log("from get/toss",res))
+    .catch(err=>console.log("from get/toss",err))
     console.log("from get/toss",postdata)
 
 })
@@ -236,17 +262,32 @@ app.patch("/toss",(req,res)=>{
 })
 
 
-app.patch("/update/",(req,res)=>{ 
+app.patch("/update/",async(req,res)=>{ 
      const team=req.params.team
      teamscore=req.body
      if(data.teamname1===teamscore.team){
            team1={...team1,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     
-     res.send(team1)
+     teamsdata.updateOne({id:0},{$set:{
+        score:teamscore.score*1,
+        wickets:teamscore.wickets*1,
+        oversplayed:teamscore.oversplayed*1,
+        count1:teamscore.count1*1
+     }}).then(res=>console.log("from update",res))
+     .catch(err=>console.log("from update",err))
+     res.send(await teamsdata.find({id:0}))
         }
      if(data.teamname2===teamscore.team){
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
-     res.send(team1)
+           teamsdata.updateOne({id:1},{$set:{
+        score:teamscore.score*1,
+        wickets:teamscore.wickets*1+1,
+        oversplayed:teamscore.oversplayed*1,
+        count1:teamscore.count1*1
+
+     }}).then(res=>console.log("from update",res))
+     .catch(err=>console.log("from update",err))
+     res.send(await teamsdata.find({id:1})
+)
     //  console.log("updateesddd2222")
 
     }
@@ -255,7 +296,7 @@ console.log("from patch/updateesddd",teamscore,team1,team2)
 })
 app.patch("/update/:id",async(req,res)=>{
     playerscore=req.body
-    const id=req.params.id-1
+    const id=req.params.id
    if(playerscore.team===data.teamname1)
     {
      team1players[id]={...team1players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1+team1players[id].scoregiven}
@@ -265,17 +306,29 @@ app.patch("/update/:id",async(req,res)=>{
             ballsplayed:playerscore.ballsplayed*1,
             wickets:playerscore.wickets*1,
             oversbowled:playerscore.oversbowled*1,
-            scoregiven:0
+            scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
       }}).then((res)=>console.log(res)).
       catch(err=>console.log("from updte id",err))
-     let players1=await team11players.find({})
-     let players2=await team22players.find({})
+     let players1=await team11players.find({}).sort({id: 1})
+     let players2=await team22players.find({}).sort({id: 1})
 
      res.send({team1players:players1,team2players:players2})
     }
     else if(playerscore.team===data.teamname2){
         team2players[id]={...team2players[id],score:playerscore.score,ballsplayed:playerscore.ballsplayed*1,wickets:playerscore.wickets,oversbowled:playerscore.oversbowled,scoregiven:playerscore.scoregiven*1}
-        res.send({team1players,team2players})
+         team22players.updateOne({id:id},
+        {$set:{
+            score:playerscore.score*1,
+            ballsplayed:playerscore.ballsplayed*1,
+          wickets:playerscore.wickets*1,
+            oversbowled:playerscore.oversbowled*1,
+            scoregiven:(((playerscore.scoregiven)===undefined)?0:playerscore.scoregiven)
+      }}).then((res)=>console.log(res)).
+      catch(err=>console.log("from updte id",err))
+     let players1=await team11players.find({}).sort({"id": -1})
+     let players2=await team22players.find({}).sort({"id": -1})
+
+     res.send({team1players:players1,team2players:players2})
     }
     // console.log("from patch/id",playerscore,team1players[id],team2players[id],data)
 
