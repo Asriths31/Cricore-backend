@@ -138,6 +138,16 @@ app.post("/sign-user",async(req,res)=>{
     console.log("userrr",req.body)
     let data9=await user.find({mailId:req.body.mailId})
     console.log("user1",data9[0])
+    team11players.deleteMany({}).then((res)=>{
+    console.log(res)
+    }).catch((err)=>{
+    console.log(err)
+    })
+    team22players.deleteMany({}).then((res)=>{
+        console.log(res)
+        }).catch((err)=>{
+        console.log(err)
+        })
    res.send(data9[0])
 })
 app.patch("/sign",(req,res)=>{
