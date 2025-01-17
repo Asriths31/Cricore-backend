@@ -148,6 +148,11 @@ app.post("/sign-user",async(req,res)=>{
         }).catch((err)=>{
         console.log(err)
         })
+        teamsdata.deleteMany({}).then((res)=>{
+            console.log(res)
+            }).catch((err)=>{
+            console.log(err)
+            })
    res.send(data9[0])
 })
 app.patch("/sign",(req,res)=>{
