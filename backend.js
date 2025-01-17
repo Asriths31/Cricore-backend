@@ -3,15 +3,7 @@ import cors from "cors"
 import bodyParser from "body-parser";
 import mysql from "mysql2"
 import mongoose from "mongoose";
-const newplayer={
-    id:13,
-    name:"dhoni",
-    score:"140",
-    ballsplayed:0,
-    scoregiven:0,
-    wickets:0,
-    oversbowled:0
-}
+
 const app=express()
 const PORT = process.env.PORT || 2001;
 var data,postdata,team1players,team2,team2players,team1,playerscore,teamscore
