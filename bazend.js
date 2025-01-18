@@ -245,17 +245,20 @@ app.post("/post",async(req,res)=>{
 
 app.post("/toss",(req,res)=>{
     postdata=(req.body)
+    console.log("from post/toss",postdata,postdata.batting===data.teamname1,postdata.batting===data.teamname2)
     if(postdata.batting===data.teamname1){
         teamsdata.updateOne({id:0},{$set:{
             toss:true
         }})
+        
     }
     else if(postdata.batting===data.teamname2){
         teamsdata.updateOne({id:1},{$set:{
             toss:true
         }})
     }
-     console.log("from post/toss",postdata)
+    console.log("from post/toss",postdata,postdata.batting===data.teamname1,postdata.batting===data.teamname2)
+
 })
 
 app.get("/toss",(req,res)=>{
