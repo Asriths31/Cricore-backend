@@ -55,7 +55,8 @@ let matchschema={
     wickets:Number,
     oversplayed:Number,
     overs:Number,
-    count1:Number
+    count1:Number,
+    toss:Boolean
 }
 team22players=mongoose.model("team2players",schema)
  team11players=mongoose.model("team1players",schema)
@@ -181,7 +182,8 @@ app.post("/post",async(req,res)=>{
         score:0,
         wickets:0,
         oversplayed:0,
-        count1:0
+        count1:0,
+        toss:false
 
     }
     team2={
@@ -191,7 +193,8 @@ app.post("/post",async(req,res)=>{
         score:0,
         wickets:0,
         oversplayed:0,
-        count1:0
+        count1:0,
+        toss:false
     }
     // console.log("from damnnnn post/post",team1.name,team2)
     team1players=(data.team1).map((players,index)=>{
@@ -242,6 +245,16 @@ app.post("/post",async(req,res)=>{
 
 app.post("/toss",(req,res)=>{
     postdata=(req.body)
+    if(postdata.batting===data.teamname1){
+        teamsdata.updateOne({id:0},{$set:{
+            toss:true
+        }})
+    }
+    else if(postdata.batting===data.teamname2){
+        teamsdata.updateOne({id:1},{$set:{
+            toss:true
+        }})
+    }
      console.log("from post/toss",postdata)
 })
 
@@ -285,7 +298,7 @@ app.patch("/update/",async(req,res)=>{
         team2={...team2,score:teamscore.score,wickets:teamscore.wickets+1,oversplayed:teamscore.oversplayed}
            teamsdata.updateOne({id:1},{$set:{
         score:teamscore.score*1,
-        wickets:teamscore.wickets*1+1,
+        wickets:teamscore.wickets*1,
         oversplayed:teamscore.oversplayed*1,
         count1:teamscore.count1*1
 
