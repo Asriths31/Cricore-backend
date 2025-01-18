@@ -249,13 +249,15 @@ app.post("/toss",(req,res)=>{
     if(postdata.batting===data.teamname1){
         teamsdata.updateOne({id:0},{$set:{
             toss:true
-        }})
+        }}).then(res=>console.log("from post/toss",res))
+        .catch(err=>console.log("from post/toss",err))
         
     }
     else if(postdata.batting===data.teamname2){
         teamsdata.updateOne({id:1},{$set:{
             toss:true
-        }})
+        }}).then(res=>console.log("from post/toss",res))
+        .catch(err=>console.log("from post/toss",err))
     }
     console.log("from post/toss",postdata,postdata.batting===data.teamname1,postdata.batting===data.teamname2)
 
