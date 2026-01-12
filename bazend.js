@@ -26,7 +26,7 @@ dotenv.config()
 // console.log(team2players)
 // const mongoose = require('mongoose');
 
- const uri=process.env.MONGO_URI||"mongodb+srv://asrithsai840:20911a04d2@cluster0.sazwe.mongodb.net/cricore?retryWrites=true&w=majority&appName=Cluster0"
+ const uri=process.env.MONGO_URI||
 //  console.log(uri)
  let teamsdata,user,team11players,team22players 
 mongoose.connect(uri,{
