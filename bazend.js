@@ -26,7 +26,7 @@ dotenv.config()
 // console.log(team2players)
 // const mongoose = require('mongoose');
 
- const uri=process.env.MONGO_URI||
+ const uri=process.env.MONGO_URI
 //  console.log(uri)
  let teamsdata,user,team11players,team22players 
 mongoose.connect(uri,{
